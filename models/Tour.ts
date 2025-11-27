@@ -12,6 +12,8 @@ export interface ITour {
     highlights: string[];
     included: string[];
     excluded: string[];
+    averageRating?: number;
+    reviewCount?: number;
     aiGenerated?: boolean;
     dynamicPricing?: {
         basePrice: number;
@@ -21,6 +23,7 @@ export interface ITour {
     createdAt: Date;
     updatedAt: Date;
 }
+
 
 const TourSchema = new Schema<ITour>(
     {
@@ -67,6 +70,16 @@ const TourSchema = new Schema<ITour>(
         excluded: {
             type: [String],
             default: [],
+        },
+        averageRating: {
+            type: Number,
+            default: 0,
+            min: 0,
+            max: 5,
+        },
+        reviewCount: {
+            type: Number,
+            default: 0,
         },
         aiGenerated: {
             type: Boolean,

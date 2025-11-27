@@ -7,6 +7,8 @@ export interface ISchedule {
     endDate: Date;
     availableSlots: number;
     bookedSlots: number;
+    maxCapacity?: number;
+    bookedCount?: number;
     status: 'available' | 'full' | 'cancelled';
     optimizedBy?: 'ai' | 'manual';
     createdAt: Date;
@@ -34,6 +36,16 @@ const ScheduleSchema = new Schema<ISchedule>(
             min: 1,
         },
         bookedSlots: {
+            type: Number,
+            default: 0,
+            min: 0,
+        },
+        maxCapacity: {
+            type: Number,
+            default: 20,
+            min: 1,
+        },
+        bookedCount: {
             type: Number,
             default: 0,
             min: 0,

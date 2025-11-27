@@ -7,6 +7,9 @@ import { motion } from 'framer-motion';
 import { MapPin, Calendar, Users, ArrowLeft, Sparkles, Image as ImageIcon } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
+import SocialShare from '@/components/SocialShare';
+import ReviewForm from '@/components/ReviewForm';
+import ReviewCard from '@/components/ReviewCard';
 
 interface Attraction {
     name: string;
@@ -22,6 +25,8 @@ interface City {
     description: string;
     images: string[];
     attractions: Attraction[];
+    averageRating?: number;
+    reviewCount?: number;
     createdAt: string;
 }
 
@@ -41,6 +46,7 @@ export default function CityDetailPage() {
     const id = params?.id as string;
     const [city, setCity] = useState<City | null>(null);
     const [tours, setTours] = useState<Tour[]>([]);
+    const [reviews, setReviews] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const [selectedImage, setSelectedImage] = useState(0);
     const [selectedAttraction, setSelectedAttraction] = useState<Attraction | null>(null);
@@ -49,6 +55,7 @@ export default function CityDetailPage() {
         if (id) {
             fetchCityDetails();
             fetchCityTours();
+            fetchReviews();
         }
     }, [id]);
 
@@ -75,6 +82,18 @@ export default function CityDetailPage() {
             }
         } catch (error) {
             console.error('Error fetching tours:', error);
+        }
+    };
+
+    const fetchReviews = async () => {
+        try {
+            const res = await fetch(`/api/reviews?cityId=${id}`);
+            const data = await res.json();
+            if (data.reviews) {
+                setReviews(data.reviews);
+            }
+        } catch (error) {
+            console.error('Error fetching reviews:', error);
         }
     };
 
@@ -151,6 +170,12 @@ export default function CityDetailPage() {
                                     <ImageIcon className="w-5 h-5" />
                                     <span>{city.images.length} Photos</span>
                                 </div>
+                                {city.averageRating && (
+                                    <div className="flex items-center gap-2">
+                                        <span className="text-yellow-400">⭐</span>
+                                        <span>{city.averageRating.toFixed(1)} ({city.reviewCount} reviews)</span>
+                                    </div>
+                                )}
                             </div>
                         </motion.div>
                     </div>
@@ -177,7 +202,7 @@ export default function CityDetailPage() {
 
             {/* Main Content */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-                {/* Description Section */}
+                {/* Description Section with Social Share */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -185,7 +210,13 @@ export default function CityDetailPage() {
                     className="mb-16"
                 >
                     <div className="bg-white rounded-3xl shadow-xl p-8 md:p-12">
-                        <h2 className="text-3xl font-bold mb-6 text-gray-900">About {city.name}</h2>
+                        <div className="flex items-start justify-between mb-6">
+                            <h2 className="text-3xl font-bold text-gray-900">About {city.name}</h2>
+                            <SocialShare
+                                title={`Discover ${city.name} - Ethiopian Travel`}
+                                description={city.description.substring(0, 150) + '...'}
+                            />
+                        </div>
                         <p className="text-lg text-gray-700 leading-relaxed">{city.description}</p>
                     </div>
                 </motion.div>
@@ -409,6 +440,55 @@ export default function CityDetailPage() {
                         </div>
                     </motion.div>
                 )}
+
+                {/* Reviews Section */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.6 }}
+                    className="mt-16"
+                >
+                    <h2 className="text-3xl font-bold mb-8 text-gray-900">
+                        Reviews {city.averageRating && `(${city.averageRating.toFixed(1)} ⭐)`}
+                    </h2>
+
+                    {/* Review Form - only for authenticated users */}
+                    {session ? (
+                        <div className="mb-8">
+                            <ReviewForm cityId={id} onSuccess={fetchReviews} />
+                        </div>
+                    ) : (
+                        <div className="mb-8 bg-blue-50 p-6 rounded-lg text-center">
+                            <p className="text-gray-700">
+                                <Link href="/signin" className="text-blue-600 hover:underline font-semibold">
+                                    Sign in
+                                </Link>
+                                {' '}to leave a review
+                            </p>
+                        </div>
+                    )}
+
+                    {/* Display Reviews */}
+                    {reviews.length > 0 ? (
+                        <div className="space-y-4">
+                            {reviews.map((review) => (
+                                <ReviewCard
+                                    key={review._id}
+                                    review={review}
+                                    canEdit={session?.user?.id === review.userId._id}
+                                    onDelete={async (id) => {
+                                        if (confirm('Delete this review?')) {
+                                            await fetch(`/api/reviews/${id}`, { method: 'DELETE' });
+                                            fetchReviews();
+                                        }
+                                    }}
+                                />
+                            ))}
+                        </div>
+                    ) : (
+                        <p className="text-gray-500 text-center py-8">No reviews yet. Be the first to review!</p>
+                    )}
+                </motion.div>
 
                 {/* Call to Action */}
                 <motion.div

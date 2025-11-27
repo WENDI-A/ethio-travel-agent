@@ -20,11 +20,13 @@ A modern, AI-integrated travel agency website for discovering and booking tours 
 
 ## 🛠️ Tech Stack
 
-- **Frontend**: Next.js 14+, React, TypeScript, TailwindCSS, Framer Motion
+- **Frontend**: Next.js 16+, React, TypeScript, TailwindCSS, Framer Motion
 - **Backend**: Next.js API Routes, Node.js
 - **Database**: MongoDB with Mongoose ODM
 - **AI Services**: OpenAI (GPT-4, DALL-E 3)
-- **Authentication**: NextAuth.js (planned)
+- **Authentication**: NextAuth.js with OAuth (Google, Facebook)
+- **Payments**: Stripe
+- **Email**: Nodemailer
 - **Icons**: Heroicons
 
 ## 📋 Prerequisites
@@ -136,6 +138,17 @@ ethio-travel/
 - `GET /api/tours` - List tours (with filters)
 - `GET /api/tours/[id]` - Get tour details
 - `POST /api/bookings` - Create booking
+- `GET /api/schedules/[id]/availability` - Check real-time availability
+
+### Payment APIs
+- `POST /api/payments/create-checkout` - Create Stripe checkout session
+- `POST /api/payments/webhook` - Handle Stripe webhooks
+
+### Review APIs
+- `GET /api/reviews` - Get reviews (with filters)
+- `POST /api/reviews` - Create review
+- `PUT /api/reviews/[id]` - Update review
+- `DELETE /api/reviews/[id]` - Delete review
 
 ### AI APIs
 - `POST /api/ai/chat` - AI travel assistant
@@ -159,14 +172,21 @@ See [ARCHITECTURE.md](./ARCHITECTURE.md) for a detailed system architecture diag
 
 ## 🔮 Future Enhancements
 
-- [ ] NextAuth.js authentication
-- [ ] Payment gateway integration (Stripe/PayPal)
-- [ ] Admin dashboard
-- [ ] User reviews and ratings
-- [ ] Real-time availability updates
-- [ ] Email notifications
-- [ ] Social media integration
-- [ ] Progressive Web App (PWA)
+### ✅ Completed
+- [x] **NextAuth.js authentication** - Fully implemented with credentials and OAuth providers
+- [x] **Payment gateway integration** - Stripe integration with checkout and webhooks
+- [x] **User reviews and ratings** - Complete review system for tours and cities
+- [x] **Real-time availability updates** - Live capacity tracking for tours
+- [x] **Email notifications** - Booking and payment confirmation emails
+- [x] **Social media integration** - OAuth login (Google/Facebook) and social sharing
+
+### 🚧 Planned
+- [ ] Progressive Web App (PWA) - Installable app with offline support
+- [ ] Admin dashboard enhancements (review moderation, payment reports)
+- [ ] Advanced analytics and reporting
+- [ ] Multi-currency support
+- [ ] SMS notifications
+- [ ] Mobile apps (iOS/Android)
 
 ## 📝 Scripts
 

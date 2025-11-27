@@ -11,6 +11,18 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
     title: "Ethio Travel - Discover Ethiopia with AI",
     description: "Experience the beauty and culture of Ethiopia with AI-powered personalized travel recommendations",
+    manifest: "/manifest.json",
+    themeColor: "#10b981",
+    appleWebApp: {
+        capable: true,
+        statusBarStyle: "default",
+        title: "Ethio Travel",
+    },
+    viewport: {
+        width: "device-width",
+        initialScale: 1,
+        maximumScale: 1,
+    },
 };
 
 export default function RootLayout({

@@ -15,6 +15,8 @@ export interface ICity {
     images: string[];
     videos?: string[];
     attractions: IAttraction[];
+    averageRating?: number;
+    reviewCount?: number;
     translations?: {
         [key: string]: {
             name: string;
@@ -55,6 +57,16 @@ const CitySchema = new Schema<ICity>(
                 rating: { type: Number, required: true, min: 0, max: 5 }
             }],
             default: [],
+        },
+        averageRating: {
+            type: Number,
+            default: 0,
+            min: 0,
+            max: 5,
+        },
+        reviewCount: {
+            type: Number,
+            default: 0,
         },
         translations: {
             type: Map,

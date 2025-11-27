@@ -17,11 +17,15 @@ export interface IBooking {
     totalPrice: number;
     status: 'pending' | 'confirmed' | 'cancelled' | 'completed';
     paymentId?: string;
-    paymentStatus: 'pending' | 'paid' | 'refunded';
+    paymentStatus: 'pending' | 'completed' | 'failed' | 'refunded';
+    paymentIntentId?: string;
+    amount?: number;
+    currency?: string;
     specialRequests?: string;
     createdAt: Date;
     updatedAt: Date;
 }
+
 
 const BookingSchema = new Schema<IBooking>(
     {
@@ -75,8 +79,18 @@ const BookingSchema = new Schema<IBooking>(
         },
         paymentStatus: {
             type: String,
-            enum: ['pending', 'paid', 'refunded'],
+            enum: ['pending', 'completed', 'failed', 'refunded'],
             default: 'pending',
+        },
+        paymentIntentId: {
+            type: String,
+        },
+        amount: {
+            type: Number,
+        },
+        currency: {
+            type: String,
+            default: 'usd',
         },
         specialRequests: {
             type: String,

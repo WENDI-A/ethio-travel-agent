@@ -1196,7 +1196,7 @@ async function seed() {
                 numberOfPeople: 2,
                 totalPrice: 300,
                 status: 'confirmed' as const,
-                paymentStatus: 'paid' as const,
+                paymentStatus: 'completed' as const,
                 paymentId: 'pay_123456',
             },
             {
@@ -1206,7 +1206,7 @@ async function seed() {
                 numberOfPeople: 4,
                 totalPrice: 2600,
                 status: 'confirmed' as const,
-                paymentStatus: 'paid' as const,
+                paymentStatus: 'completed' as const,
                 paymentId: 'pay_789012',
             },
             {
@@ -1225,7 +1225,7 @@ async function seed() {
                 numberOfPeople: 1,
                 totalPrice: 350,
                 status: 'completed' as const,
-                paymentStatus: 'paid' as const,
+                paymentStatus: 'completed' as const,
                 paymentId: 'pay_345678',
             },
         ];
