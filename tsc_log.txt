@@ -1,0 +1,64 @@
+﻿.next/dev/types/validator.ts(189,31): error TS2344: Type 'typeof import("C:/Users/wendi/ethio-travel/app/api/cities/[id]/route")' does not satisfy the constraint 'RouteHandlerConfig<"/api/cities/[id]">'.
+  Types of property 'GET' are incompatible.
+    Type '(request: NextRequest, { params }: { params: { id: string; }; }) => Promise<NextResponse<{ success: boolean; data: any; }> | NextResponse<{ success: boolean; error: any; }>>' is not assignable to type '(request: NextRequest, context: { params: Promise<{ id: string; }>; }) => void | Response | Promise<void | Response>'.
+      Types of parameters '__1' and 'context' are incompatible.
+        Type '{ params: Promise<{ id: string; }>; }' is not assignable to type '{ params: { id: string; }; }'.
+          Types of property 'params' are incompatible.
+            Property 'id' is missing in type 'Promise<{ id: string; }>' but required in type '{ id: string; }'.
+.next/dev/types/validator.ts(216,31): error TS2344: Type 'typeof import("C:/Users/wendi/ethio-travel/app/api/tours/[id]/route")' does not satisfy the constraint 'RouteHandlerConfig<"/api/tours/[id]">'.
+  Types of property 'GET' are incompatible.
+    Type '(request: NextRequest, { params }: { params: { id: string; }; }) => Promise<NextResponse<{ success: boolean; data: any; }> | NextResponse<{ success: boolean; error: any; }>>' is not assignable to type '(request: NextRequest, context: { params: Promise<{ id: string; }>; }) => void | Response | Promise<void | Response>'.
+      Types of parameters '__1' and 'context' are incompatible.
+        Type '{ params: Promise<{ id: string; }>; }' is not assignable to type '{ params: { id: string; }; }'.
+          Types of property 'params' are incompatible.
+            Property 'id' is missing in type 'Promise<{ id: string; }>' but required in type '{ id: string; }'.
+.next/types/validator.ts(225,31): error TS2344: Type 'typeof import("C:/Users/wendi/ethio-travel/app/api/cities/[id]/route")' does not satisfy the constraint 'RouteHandlerConfig<"/api/cities/[id]">'.
+  Types of property 'GET' are incompatible.
+    Type '(request: NextRequest, { params }: { params: { id: string; }; }) => Promise<NextResponse<{ success: boolean; data: any; }> | NextResponse<{ success: boolean; error: any; }>>' is not assignable to type '(request: NextRequest, context: { params: Promise<{ id: string; }>; }) => void | Response | Promise<void | Response>'.
+      Types of parameters '__1' and 'context' are incompatible.
+        Type '{ params: Promise<{ id: string; }>; }' is not assignable to type '{ params: { id: string; }; }'.
+          Types of property 'params' are incompatible.
+            Property 'id' is missing in type 'Promise<{ id: string; }>' but required in type '{ id: string; }'.
+.next/types/validator.ts(252,31): error TS2344: Type 'typeof import("C:/Users/wendi/ethio-travel/app/api/tours/[id]/route")' does not satisfy the constraint 'RouteHandlerConfig<"/api/tours/[id]">'.
+  Types of property 'GET' are incompatible.
+    Type '(request: NextRequest, { params }: { params: { id: string; }; }) => Promise<NextResponse<{ success: boolean; data: any; }> | NextResponse<{ success: boolean; error: any; }>>' is not assignable to type '(request: NextRequest, context: { params: Promise<{ id: string; }>; }) => void | Response | Promise<void | Response>'.
+      Types of parameters '__1' and 'context' are incompatible.
+        Type '{ params: Promise<{ id: string; }>; }' is not assignable to type '{ params: { id: string; }; }'.
+          Types of property 'params' are incompatible.
+            Property 'id' is missing in type 'Promise<{ id: string; }>' but required in type '{ id: string; }'.
+app/api/ai/generate-image/route.ts(28,26): error TS18048: 'response.data' is possibly 'undefined'.
+models/Booking.ts(20,9): error TS2322: Type '{ type: typeof Schema.Types.ObjectId; ref: string; required: [true, string]; }' is not assignable to type 'SchemaDefinitionProperty<string, IBooking, Document<unknown, {}, IBooking, { id: string; }, ResolveSchemaOptions<DefaultSchemaOptions>> & Omit<...> & { ...; }> | undefined'.
+  Types of property 'type' are incompatible.
+    Type 'typeof ObjectId' is not assignable to type 'typeof Mixed | StringSchemaDefinition | undefined'.
+      Type 'typeof ObjectId' is not assignable to type 'typeof Mixed | StringConstructor | typeof String | String'.
+        Type 'typeof ObjectId' is not assignable to type 'typeof Mixed'.
+          Types of property 'schemaName' are incompatible.
+            Type '"ObjectId"' is not assignable to type '"Mixed"'.
+models/Booking.ts(25,9): error TS2322: Type '{ type: typeof Schema.Types.ObjectId; ref: string; required: [true, string]; }' is not assignable to type 'SchemaDefinitionProperty<string, IBooking, Document<unknown, {}, IBooking, { id: string; }, ResolveSchemaOptions<DefaultSchemaOptions>> & Omit<...> & { ...; }> | undefined'.
+  Types of property 'type' are incompatible.
+    Type 'typeof ObjectId' is not assignable to type 'typeof Mixed | StringSchemaDefinition | undefined'.
+      Type 'typeof ObjectId' is not assignable to type 'typeof Mixed | StringConstructor | typeof String | String'.
+        Type 'typeof ObjectId' is not assignable to type 'typeof Mixed'.
+          Types of property 'schemaName' are incompatible.
+            Type '"ObjectId"' is not assignable to type '"Mixed"'.
+models/Booking.ts(30,9): error TS2322: Type '{ type: typeof Schema.Types.ObjectId; ref: string; required: [true, string]; }' is not assignable to type 'SchemaDefinitionProperty<string, IBooking, Document<unknown, {}, IBooking, { id: string; }, ResolveSchemaOptions<DefaultSchemaOptions>> & Omit<...> & { ...; }> | undefined'.
+  Types of property 'type' are incompatible.
+    Type 'typeof ObjectId' is not assignable to type 'typeof Mixed | StringSchemaDefinition | undefined'.
+      Type 'typeof ObjectId' is not assignable to type 'typeof Mixed | StringConstructor | typeof String | String'.
+        Type 'typeof ObjectId' is not assignable to type 'typeof Mixed'.
+          Types of property 'schemaName' are incompatible.
+            Type '"ObjectId"' is not assignable to type '"Mixed"'.
+models/Schedule.ts(18,9): error TS2322: Type '{ type: typeof Schema.Types.ObjectId; ref: string; required: [true, string]; }' is not assignable to type 'SchemaDefinitionProperty<string, ISchedule, Document<unknown, {}, ISchedule, { id: string; }, ResolveSchemaOptions<DefaultSchemaOptions>> & Omit<...> & { ...; }> | undefined'.
+  Types of property 'type' are incompatible.
+    Type 'typeof ObjectId' is not assignable to type 'typeof Mixed | StringSchemaDefinition | undefined'.
+      Type 'typeof ObjectId' is not assignable to type 'typeof Mixed | StringConstructor | typeof String | String'.
+        Type 'typeof ObjectId' is not assignable to type 'typeof Mixed'.
+          Types of property 'schemaName' are incompatible.
+            Type '"ObjectId"' is not assignable to type '"Mixed"'.
+models/Tour.ts(36,9): error TS2322: Type '{ type: typeof Schema.Types.ObjectId; ref: string; required: [true, string]; }' is not assignable to type 'SchemaDefinitionProperty<string, ITour, Document<unknown, {}, ITour, { id: string; }, ResolveSchemaOptions<DefaultSchemaOptions>> & Omit<...> & { ...; }> | undefined'.
+  Types of property 'type' are incompatible.
+    Type 'typeof ObjectId' is not assignable to type 'typeof Mixed | StringSchemaDefinition | undefined'.
+      Type 'typeof ObjectId' is not assignable to type 'typeof Mixed | StringConstructor | typeof String | String'.
+        Type 'typeof ObjectId' is not assignable to type 'typeof Mixed'.
+          Types of property 'schemaName' are incompatible.
+            Type '"ObjectId"' is not assignable to type '"Mixed"'.
