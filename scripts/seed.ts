@@ -28,6 +28,12 @@ import bcrypt from 'bcryptjs';
  * videos: ['https://res.cloudinary.com/YOUR_CLOUD_NAME/video/upload/v1234567890/ethio-travel/cities/video-name.mp4']
  */
 
+const createSlug = (text: string) => {
+    return text
+        .toLowerCase()
+        .replace(/[^\w ]+/g, '')
+        .replace(/ +/g, '-');
+};
 
 const cities = [
     // MAJOR CITIES
@@ -456,7 +462,7 @@ const cities = [
     {
         name: 'Gheralta',
         description: 'Spectacular region in Tigray known for its ancient rock-hewn churches perched on cliff faces. Home to over 120 churches carved into the mountains, offering breathtaking views and spiritual experiences.',
-        images: ['https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=800'],
+        images: ['https://res.cloudinary.com/dqtnppc7l/image/upload/v1764142603/Visiting-Gheralta-Rock-Churches-Korkor-Lodge-credit-O.-Grunewald.jpg_rhijlp.jpg'],
         attractions: [
             {
                 name: 'Abuna Yemata Guh Church',
@@ -911,11 +917,26 @@ async function seed() {
         await City.deleteMany({});
         await Tour.deleteMany({});
         await Schedule.deleteMany({});
-        await User.deleteMany({});
+        // Only delete sample users (those created by seed script), not manually registered users
+        await User.deleteMany({
+            email: {
+                $in: [
+                    'admin@ethiotravel.com',
+                    'john@example.com',
+                    'jane@example.com',
+                    'ahmed@example.com'
+                ]
+            }
+        });
         await Booking.deleteMany({});
         console.log('🗑️  Cleared existing data');
 
-        const createdCities = await City.insertMany(cities);
+        const citiesWithSlugs = cities.map(city => ({
+            ...city,
+            slug: createSlug(city.name)
+        }));
+
+        const createdCities = await City.insertMany(citiesWithSlugs);
         console.log(`✅ Created ${createdCities.length} cities`);
 
         const tours = [
@@ -1037,6 +1058,7 @@ async function seed() {
             // Bale Mountains Tours
             {
                 title: 'Bale Mountains Wildlife & Sanetti Plateau Safari',
+                slug: 'bale-mountains',
                 description: 'Explore the Sanetti Plateau, home to the largest population of Ethiopian wolves. Trek through afro-alpine moorlands and Harenna Forest, spotting endemic wildlife.',
                 cityId: createdCities[7]._id,
                 price: 720,
@@ -1100,7 +1122,12 @@ async function seed() {
             },
         ];
 
-        const createdTours = await Tour.insertMany(tours);
+        const toursWithSlugs = tours.map(tour => ({
+            ...tour,
+            slug: createSlug(tour.title)
+        }));
+
+        const createdTours = await Tour.insertMany(toursWithSlugs);
         console.log(`✅ Created ${createdTours.length} tours`);
 
         // Create schedules for all tours

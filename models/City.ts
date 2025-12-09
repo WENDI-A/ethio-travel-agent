@@ -11,6 +11,7 @@ export interface IAttraction {
 export interface ICity {
     _id: string;
     name: string;
+    slug?: string;
     description: string;
     images: string[];
     videos?: string[];
@@ -35,6 +36,11 @@ const CitySchema = new Schema<ICity>(
             required: [true, 'Please provide a city name'],
             unique: true,
             trim: true,
+        },
+        slug: {
+            type: String,
+            unique: true,
+            sparse: true,
         },
         description: {
             type: String,

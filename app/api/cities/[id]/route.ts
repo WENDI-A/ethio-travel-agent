@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import mongoose from 'mongoose';
 import dbConnect from '@/lib/mongodb';
 import City from '@/models/City';
 
@@ -10,7 +11,12 @@ export async function GET(
     try {
         await dbConnect();
 
-        const city = await City.findById(params.id);
+        let city;
+        if (mongoose.Types.ObjectId.isValid(params.id)) {
+            city = await City.findById(params.id);
+        } else {
+            city = await City.findOne({ slug: params.id });
+        }
 
         if (!city) {
             return NextResponse.json(

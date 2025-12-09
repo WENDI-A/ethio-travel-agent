@@ -86,20 +86,14 @@ export async function POST(request: NextRequest) {
         }
 
         // 4. Create Booking
-        // Note: session.user.id might need to be accessed differently depending on NextAuth config
-        // If session.user.id is not available, we might need to fetch the user by email
-        // For now assuming session.user.email is available and we can find the user or use ID if present
+        // Look up the user by email to be safe
+        console.log('Booking API: Session email:', session.user.email);
 
-        // Let's assume we pass the userId from the client or look it up
-        // Ideally, we should get it from the session. 
-        // Let's check if we can get the user ID from the session.
-        // If not, we'll need to look up the user by email.
-
-        // For this implementation, let's look up the user by email to be safe
-        const User = (await import('@/models/User')).default;
-        const user = await User.findOne({ email: session.user.email });
+        const user = await User.findOne({ email: session.user.email.toLowerCase() });
+        console.log('Booking API: User found:', user ? user._id : 'null');
 
         if (!user) {
+            console.error('Booking API: User not found for email:', session.user.email);
             return NextResponse.json(
                 { success: false, error: 'User not found' },
                 { status: 404 }

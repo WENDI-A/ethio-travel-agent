@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import mongoose from 'mongoose';
 import dbConnect from '@/lib/mongodb';
 import Tour from '@/models/Tour';
 
@@ -10,7 +11,12 @@ export async function GET(
     try {
         await dbConnect();
 
-        const tour = await Tour.findById(params.id).populate('cityId');
+        let tour;
+        if (mongoose.Types.ObjectId.isValid(params.id)) {
+            tour = await Tour.findById(params.id).populate('cityId');
+        } else {
+            tour = await Tour.findOne({ slug: params.id }).populate('cityId');
+        }
 
         if (!tour) {
             return NextResponse.json(

@@ -3,6 +3,7 @@ import mongoose, { Schema, model, models } from 'mongoose';
 export interface ITour {
     _id: string;
     title: string;
+    slug?: string;
     description: string;
     cityId: string;
     price: number;
@@ -31,6 +32,11 @@ const TourSchema = new Schema<ITour>(
             type: String,
             required: [true, 'Please provide a tour title'],
             trim: true,
+        },
+        slug: {
+            type: String,
+            unique: true,
+            sparse: true,
         },
         description: {
             type: String,

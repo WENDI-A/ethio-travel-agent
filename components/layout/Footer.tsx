@@ -77,7 +77,7 @@ export default function Footer() {
                         <h4 className="font-semibold mb-4">Contact</h4>
                         <ul className="space-y-2 text-gray-400">
                             <li>Email: info@ethiotravel.com</li>
-                            <li>Phone: +251 11 123 4567</li>
+                            <li>Phone: +251 979 062 454 </li>
                             <li>Addis Ababa, Ethiopia</li>
                         </ul>
                     </motion.div>

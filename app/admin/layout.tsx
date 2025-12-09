@@ -102,7 +102,7 @@ export default function AdminLayout({
             </div>
 
             {/* Main Content */}
-            <div className="ml-64">
+            <div className="ml-64 min-h-screen flex flex-col">
                 {/* Top Bar */}
                 <div className="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-8">
                     <h2 className="text-lg font-semibold text-gray-900">
@@ -116,7 +116,7 @@ export default function AdminLayout({
                 </div>
 
                 {/* Page Content */}
-                <main className="p-8">{children}</main>
+                <main className="flex-1 p-8">{children}</main>
             </div>
         </div>
     );

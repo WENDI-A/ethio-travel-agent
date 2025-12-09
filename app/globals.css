@@ -140,3 +140,30 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Custom wave divider */
+.wave-divider {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  z-index: 10;
+}
+
+.wave-divider svg {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 80px;
+}
+
+.wave-divider .shape-fill {
+  fill: #F9FAFB;
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
