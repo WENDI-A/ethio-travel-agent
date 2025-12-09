@@ -1,4 +1,5 @@
 import dbConnect from './mongodb';
+import User from '@/models/User';
 import Schedule from '@/models/Schedule';
 import Booking from '@/models/Booking';
 

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import dbConnect from '@/lib/mongodb';
+import City from '@/models/City';
 import Tour from '@/models/Tour';
 
 export async function GET(request: NextRequest) {

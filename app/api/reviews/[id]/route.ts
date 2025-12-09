@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import dbConnect from '@/lib/mongodb';
+import User from '@/models/User';
 import Review from '@/models/Review';
 import Tour from '@/models/Tour';
 import City from '@/models/City';

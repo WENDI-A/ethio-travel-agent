@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import dbConnect from '@/lib/mongodb';
+import User from '@/models/User';
 import Booking from '@/models/Booking';
 import Schedule from '@/models/Schedule';
 
