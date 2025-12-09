@@ -2,29 +2,33 @@ export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 import { NextRequest, NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
-import { stripe } from '@/lib/stripe';
-import dbConnect from '@/lib/mongodb';
-import Booking from '@/models/Booking';
 
 export async function POST(req: NextRequest) {
     try {
-        const session = await getServerSession(authOptions);
-        if (!session?.user) {
+        const { getServerSession } = await import('next-auth');
+        const { authOptions } = await import('@/app/api/auth/[...nextauth]/route');
+        const { default: dbConnect } = await import('@/lib/mongodb');
+        const { default: Booking } = await import('@/models/Booking');
+        const Stripe = (await import('stripe')).default;
+
+        const session = await getServerSession(authOptions as any);
+        const user = (session && typeof session === 'object' && 'user' in session)
+            ? (session as { user?: { id?: string } }).user
+            : undefined;
+        if (!user?.id) {
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
         }
 
         const { bookingId } = await req.json();
 
         await dbConnect();
-        const booking = await Booking.findById(bookingId).populate('tourId');
+        const booking = await (Booking as any).findById(bookingId).populate('tourId');
 
         if (!booking) {
             return NextResponse.json({ error: 'Booking not found' }, { status: 404 });
         }
 
-        if (booking.userId.toString() !== session.user.id) {
+        if (booking.userId.toString() !== user.id) {
             return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
         }
 
@@ -32,6 +36,7 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ error: 'Booking already paid' }, { status: 400 });
         }
 
+        const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
         const checkoutSession = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
             line_items: [
@@ -52,7 +57,7 @@ export async function POST(req: NextRequest) {
             cancel_url: `${process.env.NEXTAUTH_URL}/bookings?canceled=true`,
             metadata: {
                 bookingId: booking._id.toString(),
-                userId: session.user.id,
+                userId: user.id as string,
             },
         });
 
