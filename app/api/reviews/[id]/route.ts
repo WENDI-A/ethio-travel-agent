@@ -8,7 +8,7 @@ import City from '@/models/City';
 
 export async function PUT(
     req: NextRequest,
-    { params }: { params: { id: string } }
+    context: { params: Promise<{ id: string }> }
 ) {
     try {
         const session = await getServerSession(authOptions);
@@ -19,7 +19,8 @@ export async function PUT(
         const { rating, comment } = await req.json();
 
         await dbConnect();
-        const review = await Review.findById(params.id);
+        const { id } = await context.params;
+        const review = await Review.findById(id);
 
         if (!review) {
             return NextResponse.json({ error: 'Review not found' }, { status: 404 });
@@ -58,7 +59,7 @@ export async function PUT(
 
 export async function DELETE(
     req: NextRequest,
-    { params }: { params: { id: string } }
+    context: { params: Promise<{ id: string }> }
 ) {
     try {
         const session = await getServerSession(authOptions);
@@ -67,7 +68,8 @@ export async function DELETE(
         }
 
         await dbConnect();
-        const review = await Review.findById(params.id);
+        const { id } = await context.params;
+        const review = await Review.findById(id);
 
         if (!review) {
             return NextResponse.json({ error: 'Review not found' }, { status: 404 });

@@ -3,10 +3,11 @@ import { checkAvailability } from '@/lib/availability';
 
 export async function GET(
     req: NextRequest,
-    { params }: { params: { id: string } }
+    context: { params: Promise<{ id: string }> }
 ) {
     try {
-        const availability = await checkAvailability(params.id);
+        const { id } = await context.params;
+        const availability = await checkAvailability(id);
         return NextResponse.json(availability);
     } catch (error: any) {
         console.error('Availability check error:', error);

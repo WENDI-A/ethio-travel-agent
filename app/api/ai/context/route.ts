@@ -46,12 +46,14 @@ export async function GET() {
 
     if (contextStructured.cities.length) {
       chunks.push('…');
-      const cityList = contextStructured.cities.map(c => `- ${c.name} — ${c.location}`).join('\n');
+      const cityList = contextStructured.cities
+        .map((c: { name: string; location: string }) => `- ${c.name} — ${c.location}`)
+        .join('\n');
       chunks.push(`Cities and locations:\n${cityList}`);
 
       contextStructured.cities.forEach((c) => {
         if (c.attractions?.length) {
-          const attrs = c.attractions.map(a => `${a.name} — ${a.price} (${a.rating})`).join(', ');
+          const attrs = c.attractions.map((a: { name: string; price: string; rating: number }) => `${a.name} — ${a.price} (${a.rating})`).join(', ');
           chunks.push('…');
           chunks.push(`Top attractions in ${c.name}: ${attrs}`);
         }
@@ -60,7 +62,9 @@ export async function GET() {
 
     if (contextStructured.tours.length) {
       chunks.push('…');
-      const tourLines = contextStructured.tours.map(t => `- ${t.title} — ${t.duration}, ${t.price} (${t.cityName})`).join('\n');
+      const tourLines = contextStructured.tours
+        .map((t: { title: string; duration: string; price: string; cityName: string }) => `- ${t.title} — ${t.duration}, ${t.price} (${t.cityName})`)
+        .join('\n');
       chunks.push(`Tours:\n${tourLines}`);
     }
 
